@@ -1,6 +1,6 @@
 package no.ntnu.ism.lca.service;
 
-import no.ntnu.supportprim.lca.model.Patient;
+import no.ntnu.ism.lca.model.Patient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
