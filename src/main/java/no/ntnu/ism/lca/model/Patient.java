@@ -17,22 +17,22 @@ import java.util.TreeMap;
 // @NoArgsConstructor
 public class Patient {
 
-    private String id;
+    String age = "LT_30";
+    String gender = "female";
+    String bmi = "normal";
+    String edu = "highSchool";
+    String painContinuous = "yes";
 
-    @ApiModelProperty(position = 0)
-    private String patientId;
-
-    @ApiModelProperty(position = 1)
-    private String clinicId;
-
-    private String dateCreated;
-    private String dateUpdated;
-
-    private String status;
-
-    private LinkedHashMap similarPatients;
-
-    private TreeMap patientDetails;
+    int painDuration = 2;
+    int sleep = 0;
+    int activity = 3;
+    int painLastWeek = 4;
+    int painSiteCount = 1;
+    int orebQ7 = 5;
+    int pseq = 0;
+    double hsclMean = 1.6;
+    int orebQ10 = 5;
+    int workAbility = 6;
 
     public Patient(){}
 }

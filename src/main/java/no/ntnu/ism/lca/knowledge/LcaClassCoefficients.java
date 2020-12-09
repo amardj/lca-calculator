@@ -1,8 +1,5 @@
 package no.ntnu.ism.lca.knowledge;
 
-import lombok.Getter;
-import lombok.ToString;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -11,73 +8,44 @@ import java.util.TreeMap;
 /**
  * @author: Amar Jaiswal
  */
-@Getter
-@ToString
-public class LcaClassCoefficients {
+public interface LcaClassCoefficients {
 
-    final Map<String, List<Double>> ageCoeff            = new Age()           .classCoefficients;
-    final Map<String, List<Double>> genderCoeff         = new Gender()        .classCoefficients;
-    final Map<String, List<Double>> bmiCoeff            = new Bmi()           .classCoefficients;
-    final Map<String, List<Double>> eduCoeff            = new Education()     .classCoefficients;
-    final Map<String, List<Double>> painContinuousCoeff = new PainContinuous().classCoefficients;
+    Map<String, List<Double>> ageCoeff            = new Age()           .classCoefficients;
+    Map<String, List<Double>> genderCoeff         = new Gender()        .classCoefficients;
+    Map<String, List<Double>> bmiCoeff            = new Bmi()           .classCoefficients;
+    Map<String, List<Double>> eduCoeff            = new Education()     .classCoefficients;
+    Map<String, List<Double>> painContinuousCoeff = new PainContinuous().classCoefficients;
 
-    final Map<String, List<Double>> painDurationCoeff   = new TreeMap<>();
-    final Map<String, List<Double>> sleepCoeff          = new TreeMap<>();
-    final Map<String, List<Double>> activityCoeff       = new TreeMap<>();
-    final Map<String, List<Double>> painLastWeekCoeff   = new TreeMap<>();
-    final Map<String, List<Double>> painSiteCountCoeff  = new TreeMap<>();
-    final Map<String, List<Double>> orebQ7Coeff         = new TreeMap<>();
-    final Map<String, List<Double>> pseqCoeff           = new TreeMap<>();
-    final Map<String, List<Double>> hsclMeanCoeff       = new TreeMap<>();
-    final Map<String, List<Double>> orebQ10Coeff        = new TreeMap<>();
-    final Map<String, List<Double>> workAbilityCoeff    = new TreeMap<>();
+    List<Double> painDurationCoeff       = Arrays.asList( -0.27, -0.05,  1.48,   0.08,   -1.23);
+    List<Double> sleepCoeff              = Arrays.asList( -0.64, 0.39,   0.74,   -1.76,  1.27 );
+    List<Double> activityCoeff           = Arrays.asList( -1.38, 1.67,   1.03,   -2.18,  0.86 );
+    List<Double> painLastWeekCoeff       = Arrays.asList( -1.41, -0.86,  -1.33,  -1.64,  5.23 );
+    List<Double> painSiteCountCoeff      = Arrays.asList( 0.18,  -0.05,  -0.20,  0.06,   0.01 );
+    List<Double> orebQ7Coeff             = Arrays.asList( -0.13, -0.12,  -0.22,  -0.34,  0.82 );
+    List<Double> pseqCoeff               = Arrays.asList( 0.13,  0.00,   0.27,   -1.36,  0.96 );
+    List<Double> hsclMeanCoeff           = Arrays.asList( -0.73, -1.47,  -2.75,  6.82,   -1.87);
+    List<Double> orebQ10Coeff            = Arrays.asList( 3.09,  4.23,   3.29,   -14.11, 3.50 );
+    List<Double> workAbilityCoeff        = Arrays.asList( -0.27, -0.20,  -0.14,  -0.70,  1.31 );
 
-    final Map<String, List<Double>> painContLastWeekNoCoeff = new TreeMap<>();
-    final Map<String, List<Double>> painContLastWeekYesCoeff= new TreeMap<>();
-    final Map<String, List<Double>> painDurOreboQ7Coeff     = new TreeMap<>();
-    final Map<String, List<Double>> sleepHsclMeanCoeff      = new TreeMap<>();
+    List<Double> painContLastWeekNoCoeff = Arrays.asList( 0.06,  0.05,   0.07,   0.06,   -0.23);
+    List<Double> painContLastWeekYesCoeff= Arrays.asList( -0.06, -0.05,  -0.07,  -0.06,  0.236);
+    List<Double> painDurOreboQ7Coeff     = Arrays.asList( 0.00,  -0.06,  -0.10,  0.04,   0.12 );
+    List<Double> sleepHsclMeanCoeff      = Arrays.asList( -0.02, -0.07,  -0.29,  0.75,   -0.36);
+    List<Double> painLastWeekSqCoeff     = Arrays.asList( 0.07,  0.07,   0.09,   0.08,   -0.31);
+    List<Double> painsiteNumSqCoeff      = Arrays.asList( -0.06, 0.00,   0.07,   -0.08,  0.06 );
+    List<Double> hsclMeanSqCoeff         = Arrays.asList( 0.12,  0.41,   1.36,   -3.36,  1.48 );
+    List<Double> orebroQ7SqCoeff         = Arrays.asList( 0.00,  0.02,   0.03,   -0.01,  -0.04);
+    List<Double> orebQ10MeanSqCoeff      = Arrays.asList( 0.10,  0.09,   -0.01,  -0.29,  0.13 );
+    List<Double> revPseqSqCoeff          = Arrays.asList( 0.05,  0.32,   0.25,   -0.89,  0.27 );
+    List<Double> revActivitySqCoeff      = Arrays.asList( 0.10,  -0.26,  -0.24,  0.37,   0.03 );
+    List<Double> revWorkAbilitySqCoeff   = Arrays.asList( -0.04, 0.13,   0.13,   -0.21,  0.00 );
 
-    final Map<String, List<Double>> painLastWeekSqCoeff     = new TreeMap<>();
-    final Map<String, List<Double>> painsiteNumSqCoeff      = new TreeMap<>();
-    final Map<String, List<Double>> hsclMeanSqCoeff         = new TreeMap<>();
-    final Map<String, List<Double>> orebroQ7SqCoeff         = new TreeMap<>();
-    final Map<String, List<Double>> orebQ10MeanSqCoeff      = new TreeMap<>();
-    final Map<String, List<Double>> revPseqSqCoeff          = new TreeMap<>();
-    final Map<String, List<Double>> revActivitySqCoeff      = new TreeMap<>();
-    final Map<String, List<Double>> revWorkAbilitySqCoeff   = new TreeMap<>();
-
-    {
-        painDurationCoeff   .put("painDuration" , Arrays.asList( -0.27, -0.05,  1.48,   0.08,   -1.23));
-        sleepCoeff          .put("sleep"        , Arrays.asList( -0.64, 0.39,   0.74,   -1.76,  1.27 ));
-        activityCoeff       .put("activity"     , Arrays.asList( -1.38, 1.67,   1.03,   -2.18,  0.86 ));
-        painLastWeekCoeff   .put("painLastWeek" , Arrays.asList( -1.41, -0.86,  -1.33,  -1.64,  5.23 ));
-        painSiteCountCoeff  .put("painSiteCount", Arrays.asList( 0.18,  -0.05,  -0.20,  0.06,   0.01 ));
-        orebQ7Coeff         .put("orebQ7"       , Arrays.asList( -0.13, -0.12,  -0.22,  -0.34,  0.82 ));
-        pseqCoeff           .put("pseq"         , Arrays.asList( 0.13,  0.00,   0.27,   -1.36,  0.96 ));
-        hsclMeanCoeff       .put("hsclMean"     , Arrays.asList( -0.73, -1.47,  -2.75,  6.82,   -1.87));
-        orebQ10Coeff        .put("orebQ10"      , Arrays.asList( 3.09,  4.23,   3.29,   -14.11, 3.50 ));
-        workAbilityCoeff    .put("workAbility"  , Arrays.asList( -0.27, -0.20,  -0.14,  -0.70,  1.31 ));
-
-        painContLastWeekNoCoeff .put("painContLastWeekNo"   , Arrays.asList( 0.06,  0.05,   0.07,   0.06,   -0.23));
-        painContLastWeekYesCoeff.put("painContLastWeekYes"  , Arrays.asList( -0.06, -0.05,  -0.07,  -0.06,  0.236));
-        painDurOreboQ7Coeff     .put("painDurOreboQ7"       , Arrays.asList( 0.00,  -0.06,  -0.10,  0.04,   0.12 ));
-        sleepHsclMeanCoeff      .put("sleepHsclMean"        , Arrays.asList( -0.02, -0.07,  -0.29,  0.75,   -0.36));
-        painLastWeekSqCoeff     .put("painLastWeekSq"       , Arrays.asList( 0.07,  0.07,   0.09,   0.08,   -0.31));
-        painsiteNumSqCoeff      .put("painsiteNumSq"        , Arrays.asList( -0.06, 0.00,   0.07,   -0.08,  0.06 ));
-        hsclMeanSqCoeff         .put("hsclMeanSq"           , Arrays.asList( 0.12,  0.41,   1.36,   -3.36,  1.48 ));
-        orebroQ7SqCoeff         .put("orebroQ7Sq"           , Arrays.asList( 0.00,  0.02,   0.03,   -0.01,  -0.04));
-        orebQ10MeanSqCoeff      .put("orebQ10MeanSq"        , Arrays.asList( 0.10,  0.09,   -0.01,  -0.29,  0.13 ));
-        revPseqSqCoeff          .put("revPseqSq"            , Arrays.asList( 0.05,  0.32,   0.25,   -0.89,  0.27 ));
-        revActivitySqCoeff      .put("revActivitySq"        , Arrays.asList( 0.10,  -0.26,  -0.24,  0.37,   0.03 ));
-        revWorkAbilitySqCoeff   .put("revWorkAbilitySq"     , Arrays.asList( -0.04, 0.13,   0.13,   -0.21,  0.00 ));
-    }
-
-    private final class Age{
-        private static final String age18to29 = "18-29";
+     final class Age{
+        private static final String age18to29 = "LT_30";
         private static final String age30to39 = "30-39";
         private static final String age40to49 = "40-49";
         private static final String age50to59 = "50-59";
-        private static final String age60to69 = "60-69";
+        private static final String age60to69 = "MT_60";
 
         Map<String, List<Double>> classCoefficients = new TreeMap<>();;
         {
@@ -95,7 +63,7 @@ public class LcaClassCoefficients {
         }
     }
 
-    private final class Gender{
+     final class Gender{
         private static final String genderFemale = "female";
         private static final String genderMale   = "male";
 
@@ -109,7 +77,7 @@ public class LcaClassCoefficients {
         }
     }
 
-    private final class Bmi{
+     final class Bmi{
         private static final String bmiNormal       = "normal";
         private static final String bmiOverweight   = "overweight";
         private static final String bmiObese        = "obese";
@@ -126,7 +94,7 @@ public class LcaClassCoefficients {
         }
     }
 
-    private final class Education{
+     final class Education{
         private static final String eduHighSchool       = "highSchool";
         private static final String eduUpTo4YearsHE     = "upTo4YearsHE";
         private static final String eduMoreThan4YearsHE = "moreThan4YearsHE";
@@ -143,7 +111,7 @@ public class LcaClassCoefficients {
         }
     }
 
-    private final class PainContinuous{
+     final class PainContinuous{
         private static final String painContinuousNo    = "no";
         private static final String painContinuousYes   = "yes";
 
@@ -159,11 +127,10 @@ public class LcaClassCoefficients {
 
 
     public static void main(String[] args) {
-        LcaClassCoefficients lcaClassCoefficients = new LcaClassCoefficients();
-        System.out.println(lcaClassCoefficients.ageCoeff);
-        System.out.println(lcaClassCoefficients.genderCoeff);
-        System.out.println(lcaClassCoefficients.bmiCoeff);
-        System.out.println(lcaClassCoefficients.eduCoeff);
-        System.out.println(lcaClassCoefficients.painContinuousCoeff);
+        System.out.println(LcaClassCoefficients.ageCoeff);
+        System.out.println(LcaClassCoefficients.genderCoeff);
+        System.out.println(LcaClassCoefficients.bmiCoeff);
+        System.out.println(LcaClassCoefficients.eduCoeff);
+        System.out.println(LcaClassCoefficients.painContinuousCoeff);
     }
 }

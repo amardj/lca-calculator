@@ -33,7 +33,7 @@ public class LcaCalculatorController {
     public int getLcaClass(@RequestBody Patient patient) {
 
         log.info("Saving the patient data to DB");
-        int lcaClass = lcaService.getLcaClass(patient);
+        int lcaClass = lcaService.getLcaClass(patient, true); //// ????????????????????????????
         return lcaClass;
     }
 }
