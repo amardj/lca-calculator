@@ -29,6 +29,8 @@ public class LcaService {
         if (isPreconditionsMet(patient)){
             //log.info("The preconditions for the patient id : " + patient.getPatientId() + " : are met!");
 
+            log.info("LCA intercept : " + LcaIntercept.intercept);
+
             List<Double> sumProductForAllClasses = getSumProductForAllClasses(patient);
 
             List<Double> logitScorePerClass = null;
@@ -60,10 +62,10 @@ public class LcaService {
 
             List<Double> lcaClassScores  = Arrays.asList(
                     anonymScores.get(0)/anonymSum,
-                    anonymScores.get(0)/anonymSum,
-                    anonymScores.get(0)/anonymSum,
-                    anonymScores.get(0)/anonymSum,
-                    anonymScores.get(0)/anonymSum);
+                    anonymScores.get(1)/anonymSum,
+                    anonymScores.get(2)/anonymSum,
+                    anonymScores.get(3)/anonymSum,
+                    anonymScores.get(4)/anonymSum);
 
             log.info("The LCA class scores : " + lcaClassScores);
 
@@ -111,7 +113,7 @@ public class LcaService {
         listOfList.add(elementWiseMultiplication(patient.getOrebQ7()*patient.getOrebQ7(), orebroQ7SqCoeff));
         listOfList.add(elementWiseMultiplication(patient.getOrebQ10()*patient.getOrebQ10(), orebQ10MeanSqCoeff));
         listOfList.add(elementWiseMultiplication(patient.getPseq()*patient.getPseq(), revPseqSqCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getActivity()*patient.getActivity(), revActivitySqCoeff));
+        listOfList.add(elementWiseMultiplication(patient.getActivity()*patient.getWorkAbility(), revActivityWorkAbilityCoeff));
         listOfList.add(elementWiseMultiplication(patient.getWorkAbility()*patient.getWorkAbility(), revWorkAbilitySqCoeff));
 
         sumProductForAllClasses = sumIndexWise(listOfList);
@@ -169,6 +171,7 @@ public class LcaService {
             indexSum.set(2,indexSum.get(2)+indexVal.get(2));
             indexSum.set(3,indexSum.get(3)+indexVal.get(3));
             indexSum.set(4,indexSum.get(4)+indexVal.get(4));
+            log.info("var.coeff : " + indexVal);
         }
         log.info("The sum-product : " + indexSum);
         return indexSum;

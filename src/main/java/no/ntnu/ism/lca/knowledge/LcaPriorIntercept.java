@@ -1,5 +1,7 @@
 package no.ntnu.ism.lca.knowledge;
 
+import sun.lwawt.macosx.CSystemTray;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,8 +37,9 @@ public interface LcaPriorIntercept {
     }
 
      static void main(String[] args) {
-        System.out.println(a);
-        System.out.println(b);
-        System.out.println(c);
+        System.out.println("L3:M3 = " + a);
+        System.out.println("L4:M4 = " + b);
+        System.out.println("Q4    = " + avgB);
+        System.out.println("L6:M6 = " + c);
     }
 }

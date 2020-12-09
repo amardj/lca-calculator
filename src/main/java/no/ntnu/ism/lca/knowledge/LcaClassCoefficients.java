@@ -30,6 +30,8 @@ public interface LcaClassCoefficients {
     List<Double> painContLastWeekNoCoeff = Arrays.asList( 0.06,  0.05,   0.07,   0.06,   -0.23);
     List<Double> painContLastWeekYesCoeff= Arrays.asList( -0.06, -0.05,  -0.07,  -0.06,  0.236);
     List<Double> painDurOreboQ7Coeff     = Arrays.asList( 0.00,  -0.06,  -0.10,  0.04,   0.12 );
+    List<Double> revActivityWorkAbilityCoeff    = Arrays.asList( 0.10,  -0.26,  -0.24,  0.37,   0.03 );
+
     List<Double> sleepHsclMeanCoeff      = Arrays.asList( -0.02, -0.07,  -0.29,  0.75,   -0.36);
     List<Double> painLastWeekSqCoeff     = Arrays.asList( 0.07,  0.07,   0.09,   0.08,   -0.31);
     List<Double> painsiteNumSqCoeff      = Arrays.asList( -0.06, 0.00,   0.07,   -0.08,  0.06 );
@@ -37,7 +39,6 @@ public interface LcaClassCoefficients {
     List<Double> orebroQ7SqCoeff         = Arrays.asList( 0.00,  0.02,   0.03,   -0.01,  -0.04);
     List<Double> orebQ10MeanSqCoeff      = Arrays.asList( 0.10,  0.09,   -0.01,  -0.29,  0.13 );
     List<Double> revPseqSqCoeff          = Arrays.asList( 0.05,  0.32,   0.25,   -0.89,  0.27 );
-    List<Double> revActivitySqCoeff      = Arrays.asList( 0.10,  -0.26,  -0.24,  0.37,   0.03 );
     List<Double> revWorkAbilitySqCoeff   = Arrays.asList( -0.04, 0.13,   0.13,   -0.21,  0.00 );
 
      final class Age{
