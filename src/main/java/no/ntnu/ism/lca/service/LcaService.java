@@ -8,10 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static no.ntnu.ism.lca.knowledge.LcaClassCoefficients.*;
 
@@ -23,15 +20,18 @@ public class LcaService {
     private static final Log log = LogFactory.getLog(LcaService.class);
 
 
-    public int getLcaClass(Patient patient, boolean isStandardIntercept) {
+    public Map computeLcaClass(Patient patient, boolean isStandardIntercept) {
         int lcaClass = -1;
+        Map lcaCalciResponse = new LinkedHashMap();
 
         if (isPreconditionsMet(patient)){
             //log.info("The preconditions for the patient id : " + patient.getPatientId() + " : are met!");
 
             log.info("LCA intercept : " + LcaIntercept.intercept);
+            lcaCalciResponse.put("lcaInterceptEachClass", LcaIntercept.intercept);
 
             List<Double> sumProductForAllClasses = getSumProductForAllClasses(patient);
+            lcaCalciResponse.put("sumOfProductEachClass", sumProductForAllClasses);
 
             List<Double> logitScorePerClass = null;
             if(isStandardIntercept)
@@ -39,7 +39,8 @@ public class LcaService {
             else
                 logitScorePerClass = computeLogitBasedOnPriorIntercept(sumProductForAllClasses);
 
-            log.info("The logit scores : " + logitScorePerClass);
+            log.debug("The logit scores : " + logitScorePerClass);
+            lcaCalciResponse.put("sumOfProductEachClass", sumProductForAllClasses);
 
             List<Double> anonymScores  = null;
 
@@ -51,14 +52,16 @@ public class LcaService {
                         Math.exp(logitScorePerClass.get(3) - logitScorePerClass.get(0)),
                         Math.exp(logitScorePerClass.get(4) - logitScorePerClass.get(0)));
 
-            log.info("The anonymScores : " + anonymScores);
+            log.debug("The anonymScores : " + anonymScores);
+            lcaCalciResponse.put("anonymScoresEachClass", anonymScores);
 
             Double anonymSum = Double.MAX_VALUE;
 
             if (null != anonymScores)
                 anonymSum = sum(anonymScores);
 
-            log.info("The anonymSum : " + anonymSum);
+            log.debug("The anonymSum : " + anonymSum);
+            lcaCalciResponse.put("sumOfAllAnonymScores", anonymSum);
 
             List<Double> lcaClassScores  = Arrays.asList(
                     anonymScores.get(0)/anonymSum,
@@ -67,14 +70,17 @@ public class LcaService {
                     anonymScores.get(3)/anonymSum,
                     anonymScores.get(4)/anonymSum);
 
-            log.info("The LCA class scores : " + lcaClassScores);
+            log.debug("The LCA class scores : " + lcaClassScores);
+            lcaCalciResponse.put("lcaClassScores", lcaClassScores);
 
             int maxIndex = lcaClassScores.indexOf(Collections.max(lcaClassScores));
 
             lcaClass = maxIndex + 1;
+
+            lcaCalciResponse.put("lcaClass", lcaClass);
         }
 
-        return lcaClass;
+        return lcaCalciResponse;
     }
 
     private List<Double> getSumProductForAllClasses(Patient patient) {
@@ -171,15 +177,15 @@ public class LcaService {
             indexSum.set(2,indexSum.get(2)+indexVal.get(2));
             indexSum.set(3,indexSum.get(3)+indexVal.get(3));
             indexSum.set(4,indexSum.get(4)+indexVal.get(4));
-            log.info("var.coeff : " + indexVal);
+            log.debug("var.coeff : " + indexVal);
         }
-        log.info("The sum-product : " + indexSum);
+        log.debug("The sum-product : " + indexSum);
         return indexSum;
     }
 
     public static void main(String[] args) {
         Patient patient = new Patient();
         LcaService lcaService = new LcaService();
-        System.out.println("\n\nLCA class is : " + lcaService.getLcaClass(patient, true));
+        System.out.println("\n\nLCA computation Response :\n" + lcaService.computeLcaClass(patient, true));
     }
 }

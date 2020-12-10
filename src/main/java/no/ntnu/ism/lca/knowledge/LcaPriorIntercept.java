@@ -1,7 +1,5 @@
 package no.ntnu.ism.lca.knowledge;
 
-import sun.lwawt.macosx.CSystemTray;
-
 import java.util.Arrays;
 import java.util.List;
 
