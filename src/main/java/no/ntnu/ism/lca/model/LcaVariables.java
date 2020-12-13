@@ -16,7 +16,7 @@ import java.util.TreeMap;
 @Setter
 @ToString(callSuper=true, includeFieldNames=true)
 // @NoArgsConstructor
-public class Patient {
+public class LcaVariables {
 
     @ApiModelProperty(position = 0, required = true, value = "Age Category : {LT_30, 30-39, 40-49, 50-59, MT_60}", example = "LT_30")
     String age = "LT_30";
@@ -63,5 +63,5 @@ public class Patient {
     @ApiModelProperty(position = 14, required = true, value = "Reverse Work Ability range : [0, 10]", example = "6")
     int     workAbility = 6;
 
-    public Patient(){}
+    public LcaVariables(){}
 }

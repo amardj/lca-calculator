@@ -1,9 +1,8 @@
 package no.ntnu.ism.lca.service;
 
-import no.ntnu.ism.lca.knowledge.LcaClassCoefficients;
 import no.ntnu.ism.lca.knowledge.LcaIntercept;
 import no.ntnu.ism.lca.knowledge.LcaPriorIntercept;
-import no.ntnu.ism.lca.model.Patient;
+import no.ntnu.ism.lca.model.LcaVariables;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -20,17 +19,17 @@ public class LcaService {
     private static final Log log = LogFactory.getLog(LcaService.class);
 
 
-    public Map computeLcaClass(Patient patient, boolean isStandardIntercept) {
+    public Map computeLcaClass(LcaVariables lcaVariables, boolean isStandardIntercept) {
         int lcaClass = -1;
         Map lcaCalciResponse = new LinkedHashMap();
 
-        if (isPreconditionsMet(patient)){
+        if (isPreconditionsMet(lcaVariables)){
             //log.info("The preconditions for the patient id : " + patient.getPatientId() + " : are met!");
 
             log.info("LCA intercept : " + LcaIntercept.intercept);
             lcaCalciResponse.put("lcaInterceptEachClass", LcaIntercept.intercept);
 
-            List<Double> sumProductForAllClasses = getSumProductForAllClasses(patient);
+            List<Double> sumProductForAllClasses = getSumProductForAllClasses(lcaVariables);
             lcaCalciResponse.put("sumOfProductEachClass", sumProductForAllClasses);
 
             List<Double> logitScorePerClass = null;
@@ -83,44 +82,44 @@ public class LcaService {
         return lcaCalciResponse;
     }
 
-    private List<Double> getSumProductForAllClasses(Patient patient) {
+    private List<Double> getSumProductForAllClasses(LcaVariables lcaVariables) {
         List<Double> sumProductForAllClasses = null;
         List<List<Double>> listOfList = new ArrayList<>();
 
-        listOfList.add(elementWiseMultiplication(1, ageCoeff            .get(patient.getAge())));
-        listOfList.add(elementWiseMultiplication(1, genderCoeff         .get(patient.getGender())));
-        listOfList.add(elementWiseMultiplication(1, bmiCoeff            .get(patient.getBmi())));
-        listOfList.add(elementWiseMultiplication(1, eduCoeff            .get(patient.getEdu())));
-        listOfList.add(elementWiseMultiplication(1, painContinuousCoeff .get(patient.getPainContinuous())));
+        listOfList.add(elementWiseMultiplication(1, ageCoeff            .get(lcaVariables.getAge())));
+        listOfList.add(elementWiseMultiplication(1, genderCoeff         .get(lcaVariables.getGender())));
+        listOfList.add(elementWiseMultiplication(1, bmiCoeff            .get(lcaVariables.getBmi())));
+        listOfList.add(elementWiseMultiplication(1, eduCoeff            .get(lcaVariables.getEdu())));
+        listOfList.add(elementWiseMultiplication(1, painContinuousCoeff .get(lcaVariables.getPainContinuous())));
 
         // single valued
-        listOfList.add(elementWiseMultiplication(patient.getPainDuration(), painDurationCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getSleep(), sleepCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getActivity(), activityCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getPainLastWeek(), painLastWeekCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getPainSiteCount(), painSiteCountCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getOrebQ7(), orebQ7Coeff));
-        listOfList.add(elementWiseMultiplication(patient.getPseq(), pseqCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getHsclMean(), hsclMeanCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getOrebQ10(), orebQ10Coeff));
-        listOfList.add(elementWiseMultiplication(patient.getWorkAbility(), workAbilityCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getPainDuration(), painDurationCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getSleep(), sleepCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getActivity(), activityCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getPainLastWeek(), painLastWeekCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getPainSiteCount(), painSiteCountCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getOrebQ7(), orebQ7Coeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getPseq(), pseqCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getHsclMean(), hsclMeanCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getOrebQ10(), orebQ10Coeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getWorkAbility(), workAbilityCoeff));
 
-        if(patient.getPainContinuous().equals("no"))
+        if(lcaVariables.getPainContinuous().equals("no"))
             listOfList.add(elementWiseMultiplication(1, painContLastWeekNoCoeff));
         else
             listOfList.add(elementWiseMultiplication(1, painContLastWeekYesCoeff));
 
-        listOfList.add(elementWiseMultiplication(patient.getPainDuration()*patient.getOrebQ7(), painDurOreboQ7Coeff));
-        listOfList.add(elementWiseMultiplication(patient.getSleep()*patient.getHsclMean(), sleepHsclMeanCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getPainDuration()* lcaVariables.getOrebQ7(), painDurOreboQ7Coeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getSleep()* lcaVariables.getHsclMean(), sleepHsclMeanCoeff));
 
-        listOfList.add(elementWiseMultiplication(patient.getPainLastWeek()*patient.getPainLastWeek(), painLastWeekSqCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getPainSiteCount()*patient.getPainSiteCount(), painsiteNumSqCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getHsclMean()*patient.getHsclMean(), hsclMeanSqCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getOrebQ7()*patient.getOrebQ7(), orebroQ7SqCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getOrebQ10()*patient.getOrebQ10(), orebQ10MeanSqCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getPseq()*patient.getPseq(), revPseqSqCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getActivity()*patient.getWorkAbility(), revActivityWorkAbilityCoeff));
-        listOfList.add(elementWiseMultiplication(patient.getWorkAbility()*patient.getWorkAbility(), revWorkAbilitySqCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getPainLastWeek()* lcaVariables.getPainLastWeek(), painLastWeekSqCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getPainSiteCount()* lcaVariables.getPainSiteCount(), painsiteNumSqCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getHsclMean()* lcaVariables.getHsclMean(), hsclMeanSqCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getOrebQ7()* lcaVariables.getOrebQ7(), orebroQ7SqCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getOrebQ10()* lcaVariables.getOrebQ10(), orebQ10MeanSqCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getPseq()* lcaVariables.getPseq(), revPseqSqCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getActivity()* lcaVariables.getWorkAbility(), revActivityWorkAbilityCoeff));
+        listOfList.add(elementWiseMultiplication(lcaVariables.getWorkAbility()* lcaVariables.getWorkAbility(), revWorkAbilitySqCoeff));
 
         sumProductForAllClasses = sumIndexWise(listOfList);
 
@@ -156,7 +155,7 @@ public class LcaService {
         return logitScorePerClass;
     }
 
-    private boolean isPreconditionsMet(Patient patient) {
+    private boolean isPreconditionsMet(LcaVariables lcaVariables) {
         boolean isValidFlag = true;
 
         return isValidFlag;
@@ -184,8 +183,8 @@ public class LcaService {
     }
 
     public static void main(String[] args) {
-        Patient patient = new Patient();
+        LcaVariables lcaVariables = new LcaVariables();
         LcaService lcaService = new LcaService();
-        System.out.println("\n\nLCA computation Response :\n" + lcaService.computeLcaClass(patient, true));
+        System.out.println("\n\nLCA computation Response :\n" + lcaService.computeLcaClass(lcaVariables, true));
     }
 }

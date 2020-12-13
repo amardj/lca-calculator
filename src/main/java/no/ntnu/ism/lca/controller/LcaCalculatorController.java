@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import no.ntnu.ism.lca.service.LcaService;
-import no.ntnu.ism.lca.model.Patient;
+import no.ntnu.ism.lca.model.LcaVariables;
 
 import java.util.Map;
 
@@ -31,14 +31,14 @@ public class LcaCalculatorController {
 
     @PostMapping(value= "/getLcaClass")
     @ApiOperation(value = "${LcaCalculatorController.getLcaClass}",//
-            notes = "This API needs a Patient json and type of intercept to be used. For details of Patient json, please explore under the Models section of Swagger UI."
+            notes = "This API needs a Patient json and type of intercept to be used. For details of LcaVariables, please explore under the Models section of Swagger UI."
     )
     public Map getLcaClass(
             @RequestParam (value = "StandardIntercept", required = false, defaultValue = "true") boolean typeOfIntercept,
-            @RequestBody Patient patient) {
+            @RequestBody LcaVariables lcaVariables) {
 
         log.info("Saving the patient data to DB");
-        Map lcaCalculatorResponse = lcaService.computeLcaClass(patient, typeOfIntercept);
+        Map lcaCalculatorResponse = lcaService.computeLcaClass(lcaVariables, typeOfIntercept);
         return lcaCalculatorResponse;
     }
 }
