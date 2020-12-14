@@ -37,8 +37,9 @@ public class LcaCalculatorController {
             @RequestParam (value = "StandardIntercept", required = false, defaultValue = "true") boolean typeOfIntercept,
             @RequestBody LcaVariables lcaVariables) {
 
-        log.info("Saving the patient data to DB");
+        log.info("Trying to compute the LCA class...");
         Map lcaCalculatorResponse = lcaService.computeLcaClass(lcaVariables, typeOfIntercept);
+        log.info("The LCA class is computed.");
         return lcaCalculatorResponse;
     }
 }

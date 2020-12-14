@@ -33,10 +33,10 @@ public class LcaVariables {
     @ApiModelProperty(position = 4, required = true, value = "PainContinuous Category : {no, yes}", example = "no")
     String painContinuous = "yes";
 
-    @ApiModelProperty(position = 5, required = true, value = "PainDuration range : [0, 10]", example = "2")
+    @ApiModelProperty(position = 5, required = true, value = "PainDuration range : [1, 3]", example = "2")
     int     painDuration = 2;
 
-    @ApiModelProperty(position = 6, required = true, value = "Sleep range : [1, 5]", example = "0")
+    @ApiModelProperty(position = 6, required = true, value = "Sleep range : [0, 3]", example = "0")
     int     sleep = 0;
 
     @ApiModelProperty(position = 7, required = true, value = "Reverse Activity range : [1, 4]", example = "3")
@@ -54,7 +54,7 @@ public class LcaVariables {
     @ApiModelProperty(position = 11, required = true, value = "Reverse PSEQ range : [0, 12]", example = "0")
     int     pseq = 0;
 
-    @ApiModelProperty(position = 12, required = true, value = "Hscl Mean range : [0.0, 4.0]", example = "1.6")
+    @ApiModelProperty(position = 12, required = true, value = "Hscl Mean range : [1.0, 4.0]", example = "1.6")
     double  hsclMean = 1.6;
 
     @ApiModelProperty(position = 13, required = true, value = "Oreb Q10 range : [0, 10]", example = "5")

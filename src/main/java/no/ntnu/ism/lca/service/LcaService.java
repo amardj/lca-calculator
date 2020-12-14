@@ -26,7 +26,7 @@ public class LcaService {
         if (isPreconditionsMet(lcaVariables)){
             //log.info("The preconditions for the patient id : " + patient.getPatientId() + " : are met!");
 
-            log.info("LCA intercept : " + LcaIntercept.intercept);
+            log.debug("LCA intercept : " + LcaIntercept.intercept);
             lcaCalciResponse.put("lcaInterceptEachClass", LcaIntercept.intercept);
 
             List<Double> sumProductForAllClasses = getSumProductForAllClasses(lcaVariables);
