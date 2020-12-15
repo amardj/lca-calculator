@@ -76,10 +76,33 @@ public class LcaService {
 
             lcaClass = maxIndex + 1;
 
-            lcaCalciResponse.put("lcaClass", lcaClass);
+            int lca = reorderAccordingIngebrigtPaper(lcaClass);
+
+            lcaCalciResponse.put("lcaClass", lca);
         }
 
         return lcaCalciResponse;
+    }
+
+    private int reorderAccordingIngebrigtPaper(int lcaClass) {
+        int lca = 0;
+
+        switch (lca){
+            case 1 : lca = 2;
+                break;
+            case 2 : lca = 3;
+                break;
+            case 3 : lca = 4;
+                break;
+            case 4 : lca = 1;
+                break;
+            case 5 : lca = 5;
+                break;
+            default:
+                lca = 0;
+        }
+
+        return lca;
     }
 
     private List<Double> getSumProductForAllClasses(LcaVariables lcaVariables) {
